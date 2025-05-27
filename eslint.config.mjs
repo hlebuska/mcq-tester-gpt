@@ -90,7 +90,6 @@ export default defineConfig([
         files: ['**/*.ts', '**/*.tsx'],
 
         rules: {
-            'no-console': 'warn',
             'react/prop-types': 'off',
             'react/jsx-uses-react': 'off',
             'react/react-in-jsx-scope': 'off',
@@ -129,25 +128,6 @@ export default defineConfig([
             ],
 
             'react/self-closing-comp': 'warn',
-
-            'padding-line-between-statements': [
-                'warn',
-                {
-                    blankLine: 'always',
-                    prev: '*',
-                    next: 'return',
-                },
-                {
-                    blankLine: 'always',
-                    prev: ['const', 'let', 'var'],
-                    next: '*',
-                },
-                {
-                    blankLine: 'any',
-                    prev: ['const', 'let', 'var'],
-                    next: ['const', 'let', 'var'],
-                },
-            ],
         },
     },
 ]);
