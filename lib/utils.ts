@@ -14,7 +14,7 @@ export function getPrompt(options: number, questions: number, content: string) {
 
     return `# SYSTEM
 You are an expert assessment designer.  
-Your task is to read the user’s SOURCE TEXT and return a JSON array of multiple-choice questions that assess comprehension at several cognitive levels.  
+Your task is to read the user’s SOURCE TEXT and return a JSON array of multiple-choice questions that assess comprehension at several cognitive levels based on SOURCE TEXT only..  
 Follow the exact JSON schema, validation rules, and content guidelines below.  
 Do not output anything except the final JSON array.  
 If you cannot comply, output the single string "ERROR".
@@ -43,7 +43,7 @@ UNIQUE_OPTION_PER_QUESTION = true
 NO “All of the above” OR “None of the above”.
 
 # CONTENT RULES
-1. Base every question strictly on the SOURCE TEXT.  
+1. Base every question strictly on the SOURCE TEXT, do not use general knowldege!, if source text is not enough to form a sufficient test, return output the single string "ERROR".
 2. Distribute difficulties roughly 20 % easy, 40 % medium, 40 % hard.  
 3. Cover the breadth of the chapter (different sub-topics).  
 4. At least 30 % of questions must target ≥ “apply” cognitive level.  

@@ -10,11 +10,19 @@ import { useState } from "react";
 
 export default function Home() {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
+
+  const [options, setOptions] = useState<number>(3);
+  const [questions, setQuestions] = useState<number>(5);
+
   const [prompt, setPrompt] = useState<string>('');
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     // Prevent default browser page refresh.
     e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const data = Object.fromEntries(formData.entries());
+
+    console.log(data); // Now you can see all the named form inputs
     console.log('sumbited')
 
     const res = await fetch("/api/generate", {
@@ -22,12 +30,13 @@ export default function Home() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ prompt: getPrompt(4, 10, prompt) }),
+      body: JSON.stringify({ prompt: getPrompt(options, questions, prompt) }),
     });
 
-    const data = await res.json();
+    const
+      res_data = await res.json();
     if (res.ok) {
-      console.log(data.response.output[0].content[0].text)
+      console.log(res_data.response.output[0].content[0].text)
     } else {
       console.error(data.error);
     }
@@ -75,6 +84,7 @@ export default function Home() {
                     size="sm"
                     step={1}
                     aria-label="Number of options"
+                    onChangeEnd={(value) => setOptions(value as number)}
                   />
 
                   <Slider
@@ -87,18 +97,8 @@ export default function Home() {
                     size="sm"
                     step={1}
                     aria-label="Number of options"
+                    onChangeEnd={(value) => setQuestions(value as number)}
                   />
-
-                  <div>
-                    <h3 className="text-sm">Custom prompt</h3>
-                    <Textarea
-                      className=""
-                      placeholder="Enter custom promt to create the test with. (optional)"
-                      minRows={1}
-                      maxRows={4}
-                      variant={"underlined"}
-                    />
-                  </div>
                 </div>
               </AccordionItem>
             </Accordion>

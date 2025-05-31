@@ -16,6 +16,7 @@ export async function POST(request: Request) {
         const response = await client.responses.create({
             model: 'gpt-4.1-nano-2025-04-14',
             input: body.prompt,
+    
         });
 
         return NextResponse.json({ response });
