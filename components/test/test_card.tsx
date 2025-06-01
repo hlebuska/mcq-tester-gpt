@@ -1,5 +1,6 @@
 import { Card, CardBody, CardFooter, CardHeader } from "@heroui/card";
 import { Divider } from "@heroui/divider";
+import { cn } from "@heroui/theme";
 
 interface IProps {
   question: {
@@ -16,6 +17,15 @@ interface IProps {
 }
 
 export default function TestCard({ question, answers, setAnswer }: IProps) {
+  const badgeClass = cn("text-xs px-2 py-1 rounded-full font-medium", {
+    "text-green-500 bg-green-800 border-2 border-green-500":
+      question.difficulty === "easy",
+    "text-yellow-500 bg-yellow-800 border-2 border-yellow-500":
+      question.difficulty === "medium",
+    "text-red-400 bg-red-800 border-2 border-red-400":
+      question.difficulty === "hard",
+  });
+
   return (
     <Card className="w-[80%]">
       <CardHeader className="flex gap-3">
@@ -60,9 +70,7 @@ export default function TestCard({ question, answers, setAnswer }: IProps) {
       </CardBody>
 
       <CardFooter>
-        <div className="text-xs bg-green-800 text-white p-1 rounded-lg">
-          {question.difficulty}
-        </div>
+        <div className={badgeClass}>{question.difficulty}</div>
       </CardFooter>
     </Card>
   );
