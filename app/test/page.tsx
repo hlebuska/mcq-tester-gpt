@@ -2,6 +2,8 @@
 
 import TestPagination from "@/components/test-pagination";
 import TestCard from "@/components/test/test_card";
+import { getUnansweredQuesiton } from "@/lib/utils";
+import { Button } from "@heroui/button";
 import { useState } from "react";
 
 const test = {
@@ -84,7 +86,7 @@ export default function TestPage() {
 
   return (
     <section className="flex flex-col items-center gap-12 px-4">
-      <div className="flex flex-col gap-5 ">
+      <div className="flex flex-col gap-4">
         <p className="text-small text-default-500">
           Selected Question: {currentPage}
         </p>
@@ -106,6 +108,15 @@ export default function TestPage() {
           }));
         }}
       />
+      {currentPage == Object.keys(test).length ||
+        (Object.keys(answers).length == Object.keys(test).length && (
+          <Button
+            color="danger"
+            onClick={() => getUnansweredQuesiton(test, answers)}
+          >
+            Finish test
+          </Button>
+        ))}
     </section>
   );
 }

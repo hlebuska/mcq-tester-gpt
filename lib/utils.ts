@@ -63,3 +63,13 @@ If any check fails, regenerate internally until it passes.
  ${content}
 # SOURCE END`;
 }
+
+export function getUnansweredQuesiton(test, answers : {[questionId: string]: string }): string[] {
+  const testKeys = Object.keys(test);
+  const answersKeys = Object.keys(answers);
+
+  const difference = testKeys.filter((key) => !answersKeys.includes(key));
+
+  console.log(difference)
+  return difference
+}

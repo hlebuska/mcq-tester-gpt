@@ -43,8 +43,6 @@ export default function TestCard({ question, answers, setAnswer }: IProps) {
         {question.options.map((option, index) => {
           const optionId = `${question.id}_option_${index}`;
           const labelLetter = String.fromCharCode(65 + index); // A, B, C, etc.
-          console.log(question.id);
-          console.log(answers[question.id]);
           return (
             <div key={index} className="w-full">
               <input
