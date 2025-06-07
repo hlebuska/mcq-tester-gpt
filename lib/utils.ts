@@ -64,12 +64,20 @@ If any check fails, regenerate internally until it passes.
 # SOURCE END`;
 }
 
-export function getUnansweredQuesiton(test, answers : {[questionId: string]: string }): string[] {
+export function getUnansweredQuesiton(
+  test: Record<string, any>,
+  answers: { [questionId: string]: string }
+): number[] {
   const testKeys = Object.keys(test);
   const answersKeys = Object.keys(answers);
 
   const difference = testKeys.filter((key) => !answersKeys.includes(key));
 
-  console.log(difference)
-  return difference
+  const formatted = difference.map((key) => {
+    const numberPart = key.replace(/^Q/, ""); 
+    return parseInt(numberPart, 10);
+  });
+
+  console.log(formatted);
+  return formatted;
 }

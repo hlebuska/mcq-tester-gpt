@@ -2,8 +2,9 @@
 
 import TestPagination from "@/components/test-pagination";
 import TestCard from "@/components/test/test_card";
+import TestSubmit from "@/components/test/test_submit";
 import { getUnansweredQuesiton } from "@/lib/utils";
-import { Button } from "@heroui/button";
+
 import { useState } from "react";
 
 const test = {
@@ -84,6 +85,10 @@ export default function TestPage() {
 
   const [answers, setAnswers] = useState<{ [questionId: string]: string }>({});
 
+  const testDone =
+    currentPage == Object.keys(test).length ||
+    Object.keys(answers).length == Object.keys(test).length;
+
   return (
     <section className="flex flex-col items-center gap-12 px-4">
       <div className="flex flex-col gap-4">
@@ -108,15 +113,10 @@ export default function TestPage() {
           }));
         }}
       />
-      {currentPage == Object.keys(test).length ||
-        (Object.keys(answers).length == Object.keys(test).length && (
-          <Button
-            color="danger"
-            onClick={() => getUnansweredQuesiton(test, answers)}
-          >
-            Finish test
-          </Button>
-        ))}
+      <TestSubmit
+        unansweredQuestion={getUnansweredQuesiton(test, answers)}
+        testDone={testDone}
+      />
     </section>
   );
 }
