@@ -1,14 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { Button } from "@heroui/button";
-import { Card, CardBody, CardFooter, CardHeader } from "@heroui/card";
-import { Divider } from "@heroui/divider";
-import { Pagination, PaginationItemType } from "@heroui/pagination";
+import TestPagination from "@/components/test-pagination";
 import TestCard from "@/components/test/test_card";
-import { cn } from "@heroui/theme";
-import { ChevronIcon } from "@/components/icons";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useState } from "react";
 
 const test = {
   Q01: {
@@ -86,9 +80,7 @@ export default function TestPage() {
   const key = `Q0${currentPage}` as keyof typeof test;
   const question = test[key];
 
-  const [answers, setAnswers] = useState<{ [questionId: string]: string }>({
-    Q01: "Q01_option_2",
-  });
+  const [answers, setAnswers] = useState<{ [questionId: string]: string }>({});
 
   return (
     <section className="flex flex-col items-center gap-12 px-4">
@@ -96,73 +88,11 @@ export default function TestPage() {
         <p className="text-small text-default-500">
           Selected Question: {currentPage}
         </p>
-        <Pagination
-          page={currentPage}
-          total={Object.keys(test).length}
-          onChange={setCurrentPage}
-          showControls
-          siblings={3}
-          renderItem={({
-            ref,
-            key,
-            value,
-            isActive,
-            onNext,
-            onPrevious,
-            setPage,
-            className,
-          }) => {
-            if (value === PaginationItemType.NEXT) {
-              return (
-                <button
-                  key={key}
-                  className={cn(className, "bg-default-200/50 min-w-8 w-8 h-8")}
-                  onClick={onNext}
-                >
-                  <ChevronRight size={16} />
-                </button>
-              );
-            }
-
-            if (value === PaginationItemType.PREV) {
-              return (
-                <button
-                  key={key}
-                  className={cn(className, "bg-default-200/50 min-w-8 w-8 h-8")}
-                  onClick={onPrevious}
-                >
-                  <ChevronLeft size={16} />
-                </button>
-              );
-            }
-
-            if (value === PaginationItemType.DOTS) {
-              return (
-                <button key={key} className={className}>
-                  ...
-                </button>
-              );
-            }
-
-            // cursor is the default item
-
-            return (
-              <button
-                key={key}
-                ref={ref}
-                className={cn(
-                  className,
-                  Boolean(answers[`Q0${value}`]) &&
-                    "bg-pink-950 transform scale-95",
-                  isActive && "text-white bg-danger font-bold "
-                )}
-                onClick={() => setPage(value)}
-              >
-                {value}
-              </button>
-            );
-          }}
-          disableCursorAnimation
+        <TestPagination
+          answers={answers}
+          currentPage={currentPage}
+          setCurrentPage={(page: number) => setCurrentPage(page)}
+          length={Object.keys(test).length}
         />
       </div>
 
